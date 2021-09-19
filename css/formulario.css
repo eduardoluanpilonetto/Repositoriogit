@@ -1,0 +1,117 @@
+body{
+    margin: 0;
+    padding: 0;
+    background: #1C1C1C	;
+    background-size: cover;
+    font-family: 'Open Sans', sans-serif;
+    z-index: -10;
+}
+
+#overlay{
+    position: absolute;
+    background-color: rgba(0,0,0,0.7);
+    z-index: -5;
+    height: 100%;
+    width: 100%;
+    top: 0;
+    bottom: 0;
+    
+}
+
+.loginbox{
+    width: 720px;
+    height: 100%;
+    color: #000;
+    top: 50%;
+    left: 50%;
+    padding: 60px 30px;
+    position: absolute;
+    transform: translate(-50%,  -50%);
+    box-sizing: border-box;
+    border-radius: 3%;
+    box-shadow: 8px 8px 50px #000;
+}
+h1{
+    color: #fff;
+    margin: 0;
+    padding: 0 0 0px;
+    text-align: center;
+    font-size: 22px;
+    font-weight: bold;
+}
+
+.loginbox p {
+    margin: 0;
+    padding: 0;
+    font-weight: bold;
+    font-size: 13px;
+}
+ 
+.loginbox input{
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+.loginbox input[type="text"], textarea{
+    border: none;
+    border-bottom: 1px solid #bdc3c7;
+    background: transparent;
+    outline: none;
+    font-size: 16px;
+    opacity: 1;
+    color: #ccc;
+    width: 100%;
+}
+
+.loginbox input[type="text"]{
+    height: 30px;
+}
+
+.loginbox textarea{
+    font-family: 'Open Sans', sans-serif;
+    height: 150px;
+}
+
+
+.loginbox input[type="button"]{
+    padding: 10px;
+    border: none;
+    outline: none;
+    height: 40px;
+    background: #20B2AA;
+    color: #fff;
+    font-size: 14px;
+    font-weight: bold;
+    border-radius: 20px;
+    font-family: 'Open Sans', sans-serif;
+}
+
+.loginbox input[type="button"]:hover {
+    cursor: pointer;
+    background: #008080;
+    color: #fff;
+    
+}
+
+.loginbox a {
+    font-size: 14px;
+    text-decoration: none;
+    color: #fff;
+    opacity: 0.8;
+}
+
+.loginbox a:hover {
+    color: #fff;
+    opacity: 1;
+}
+
+#text-account {
+    font-size: 14px;
+    color: #fff;
+    opacity: 0.4;
+}
+
+#create-account: hover {
+    text-decoration: underline;
+    font-weight: bold;
+}

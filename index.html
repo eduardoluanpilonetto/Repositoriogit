@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<link rel="stylesheet" href="css/formulario.css"/>
+	<title>Ordenação de dados</title>
+</head>
+<body>
+<div id="overlay"></div>
+    <div class="loginbox">
+        <h1>Ordenação de dados</h1><br>
+			  <input type="text" placeholder="Quantidade" name="qtd" id="qtd" maxlength="7" onkeypress="return SomenteNumero(event)"/><br>
+			  <textarea placeholder="Valores..." name="valores" id="valores"></textarea><br>
+        <input type="button" value="Ordenação por inserção" onclick='ordenacaoInsercao();'/><br>
+        <input type="button" value="Ordenação Bolha" onclick='ordenacaoBolha();'/><br>
+        <input type="button" value="Ordenação por seleção" onclick='ordenacaoSelecao();'/><br>
+        <input type="button" value="quickSort" onclick='quickSort();'/><br>
+        <input type="button" value="Bogosort" onclick='Bogosort();'/><br>
+        <input type="button" value="CocktailSort" onclick='cocktailSort();'/><br>
+
+    </div>
+</body>
+</html>
+
+<script> 
+
+function SomenteNumero(e){
+    var tecla=(window.event)?event.keyCode:e.which; 
+    if((tecla > 47 && tecla < 58)) return true;
+    else{
+    	if (tecla == 8 || tecla == 0) return true;
+	else  return false;
+    }
+}
+
+function gerarItens(valor, itens){
+    let aleatorio;
+    for(let cont = 0; cont < valor; cont+=1){
+        aleatorio = Math.trunc(Math.random() * (1000 - 0 + 1));
+        itens.push(aleatorio);
+    }
+    return itens;
+}
+
+function ordenacaoBolha() {
+  let vetor = new Array();
+
+  vetor = gerarItens(document.getElementById('qtd').value,vetor);
+  
+  let n = vetor.length;
+  let date1 = new Date;
+  for (let i = 0; i < n - 1; i++)
+    for (let j = 0; j < n - i - 1; j++)
+      if (vetor[j] > vetor[j + 1]) {
+        // troca temp and vetor[i]
+        let temp = vetor[j];
+        vetor[j] = vetor[j + 1];
+        vetor[j + 1] = temp;
+      }
+    let date2 = new Date;
+    alert(`O sistema levou ${date2.getTime() - date1.getTime()} milisegundos para organizar`);
+    document.getElementById('valores').value = vetor;
+}
+
+function ordenacaoSelecao() {
+  let vetor = new Array();
+
+  vetor = gerarItens(document.getElementById('qtd').value,vetor);
+  
+  let n = vetor.length;
+  let date1 = new Date;
+  for (let i = 0; i < n - 1; i++) {
+    //Encontra o menor item da parte não ordenada
+    let min_idx = i;
+    for (let j = i + 1; j < n; j++)
+      if (vetor[j] < vetor[min_idx])
+        min_idx = j;
+    //Troca o menor com o primeiro elemento
+    let temp = vetor[min_idx];
+    vetor[min_idx] = vetor[i];
+    vetor[i] = temp;
+  }
+  let date2 = new Date;
+  alert(`O sistema levou ${date2.getTime() - date1.getTime()} milisegundos para organizar`);
+  document.getElementById('valores').value = vetor;
+}
+
+function ordenacaoInsercao()
+{  
+    let vetor = new Array();
+
+    vetor = gerarItens(document.getElementById('qtd').value,vetor);
+    let n = vetor.length;
+
+    let date1 = new Date;
+    for (let i=1; i<n; ++i)
+    {
+        let key = vetor[i];
+        let j = i-1;
+        //Move os elementos do vetor que são maiores que a chave para uma posição a frente 
+        while (j>=0 && vetor[j] > key)
+        {
+            vetor[j+1] = vetor[j];
+            j = j-1;
+        }
+        vetor[j+1] = key;
+    }
+    let date2 = new Date;
+    alert(`O sistema levou ${date2.getTime() - date1.getTime()} milisegundos para organizar`);
+    document.getElementById('valores').value = vetor;
+}
+
+function swap(items, leftIndex, rightIndex){
+    var temp = items[leftIndex];
+    items[leftIndex] = items[rightIndex];
+    items[rightIndex] = temp;
+}
+function partition(items, left, right) {
+    var pivot   = items[Math.floor((right + left) / 2)], 
+        i       = left, 
+        j       = right; 
+    while (i <= j) {
+        while (items[i] < pivot) {
+            i++;
+        }
+        while (items[j] > pivot) {
+            j--;
+        }
+        if (i <= j) {
+            swap(items, i, j);
+            i++;
+            j--;
+        }
+    }
+    return i;
+}
+
+function quickSort2(items, left, right) {
+    var index;
+    if (items.length > 1) {
+        index = partition(items, left, right); 
+        if (left < index - 1) { 
+            quickSort2(items, left, index - 1);
+        }
+        if (index < right) {
+            quickSort2(items, index, right);
+        }
+    }
+    return items;
+}
+
+function quickSort(){
+  let items = new Array();
+
+  items = gerarItens(document.getElementById('qtd').value,items);
+
+  let date1 = new Date;
+  items = quickSort2(items, 0 , items.length - 1);
+  let date2 = new Date;
+
+  alert(`O sistema levou ${date2.getTime() - date1.getTime()} milisegundos para organizar`);
+  document.getElementById('valores').value = items;
+}
+
+function Bogosort2(arr){
+    var isSorted = function(arr){
+        for(var i = 1; i < arr.length; i++){
+            if (arr[i-1] > arr[i]) {
+                return false;} 
+          }return true;};
+    function shuffle(arr){
+        var count = arr.length, temp, index;
+        while(count > 0){
+            index = Math.floor(Math.random() * count);
+            count--;
+
+            temp = arr[count];
+            arr[count] = arr[index];
+            arr[index] = temp;
+        } return arr;
+    }
+   function sort(arr){
+        var sorted = false;
+        while(!sorted){
+            arr = shuffle(arr);
+            sorted = isSorted(arr);
+        }return arr;
+    }return sort(arr);
+}
+
+function Bogosort(){
+  let items = new Array();
+
+  items = gerarItens(document.getElementById('qtd').value,items);
+
+  let date1 = new Date;
+  items = Bogosort2(items);
+  let date2 = new Date;
+
+  alert(`O sistema levou ${date2.getTime() - date1.getTime()} milisegundos para organizar`);
+  document.getElementById('valores').value = items;
+}
+
+function cocktailSort2(arr) {
+	let start = 0, end = arr.length, swapped = true;
+
+	while (swapped) {
+		swapped = false;
+		for (let i = start; i < end - 1; i++) {
+			if (arr[i] > arr[i+1]) {
+				let temp = arr[i];
+				arr[i] = arr[i+1];
+				arr[i+1] = temp;
+				swapped = true;
+			}
+		}
+		end--;
+		if (!swapped)
+			break;
+		swapped = false;
+		for (let i = end - 1; i > start; i--) {
+			if (arr[i - 1] > arr[i]) {
+				let temp = arr[i];
+				arr[i] = arr[i - 1];
+				arr[i - 1] = temp;
+				swapped = true;
+			}
+		}
+		start++;
+	}
+	return arr;
+}
+
+function cocktailSort(){
+  let items = new Array();
+
+  items = gerarItens(document.getElementById('qtd').value,items);
+
+  let date1 = new Date;
+  items = cocktailSort2(items);
+  let date2 = new Date;
+
+  alert(`O sistema levou ${date2.getTime() - date1.getTime()} milisegundos para organizar`);
+  document.getElementById('valores').value = items;
+}
+
+</script>
